@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 import Wrapper from './Wrapper';
 import Menu from './Menu';
 import MenuMobile from './MenuMobile';
+import { fetchDataFromApi } from '@/utils/api';
 
 function Header(props) {
 	const [mobileMenu, setMobileMenu] = useState(false);
@@ -36,6 +37,13 @@ function Header(props) {
 			window.removeEventListener('scroll', controlNavbar);
 		};
 	}, [lastScrollY]);
+	useEffect(() => {
+		fetchCategories();
+	}, []);
+	const fetchCategories = async () => {
+		const { data } = await fetchDataFromApi('/api/categories?populate=*');
+		setCategories(data);
+	};
 
 	return (
 		<div
@@ -43,10 +51,7 @@ function Header(props) {
 		>
 			<Wrapper className="h-[60px] flex justify-between items-center">
 				<Link href="/">
-					<img
-						src="./assets/logo.svg"
-						className="w-[40px] md:w-[60px]"
-					/>
+					<img src="/logo.svg" className="w-[40px] md:w-[60px]" />
 				</Link>
 
 				<Menu

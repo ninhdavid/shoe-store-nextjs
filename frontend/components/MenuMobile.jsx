@@ -3,7 +3,12 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { BsChevronDown } from 'react-icons/bs';
 
-function MenuMobile({ showCatMenu, setShowCatMenu, setMobileMenu }) {
+function MenuMobile({
+	showCatMenu,
+	setShowCatMenu,
+	setMobileMenu,
+	categories,
+}) {
 	const data = [
 		{ id: 1, name: 'Home', url: '/' },
 		{ id: 2, name: 'About', url: '/about' },
@@ -34,25 +39,31 @@ function MenuMobile({ showCatMenu, setShowCatMenu, setMobileMenu }) {
 								</div>
 								{showCatMenu && (
 									<ul className="bg-black/[0.05] -mx-5 mt-4 -mb-4">
-										{subMenuData.map((submenu) => {
-											return (
-												<Link
-													key={submenu.id}
-													href="/"
-													onClick={() => {
-														setShowCatMenu(false);
-														setMobileMenu(false);
-													}}
-												>
-													<li className="py-4 px-8 border-b flex justify-between">
-														{submenu.name}
-														<span className="opacity-50 text-sm">
-															78
-														</span>
-													</li>
-												</Link>
-											);
-										})}
+										{categories.map(
+											({ attributes: c, id }) => {
+												return (
+													<Link
+														key={id}
+														href="/"
+														onClick={() => {
+															setShowCatMenu(
+																false
+															);
+															setMobileMenu(
+																false
+															);
+														}}
+													>
+														<li className="py-4 px-8 border-b flex justify-between">
+															{c.name}
+															<span className="opacity-50 text-sm">
+																{`(${c.products.data.length})`}
+															</span>
+														</li>
+													</Link>
+												);
+											}
+										)}
 									</ul>
 								)}
 							</li>
