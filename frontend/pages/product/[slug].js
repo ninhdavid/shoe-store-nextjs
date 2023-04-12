@@ -1,11 +1,13 @@
 import ProductDetailsCarousel from '@/components/ProductDetailsCarousel';
 import RelatedProducts from '@/components/RelatedProducts';
 import Wrapper from '@/components/Wrapper';
+import { addCart } from '@/store/cartSlice';
 import { fetchDataFromApi } from '@/utils/api';
 import { getDiscountPricecentage } from '@/utils/helper';
 import { useState } from 'react';
 import { IoMdHeartEmpty } from 'react-icons/io';
 import ReactMarkdown from 'react-markdown';
+import { useDispatch } from 'react-redux';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -14,7 +16,7 @@ const ProductDetails = ({ product, products }) => {
 	const [selectedSize, setSelectedSize] = useState();
 	const [showError, setShowError] = useState(false);
 	const p = product?.data?.[0]?.attributes;
-
+	const dispatch = useDispatch();
 	const notify = () => {
 		toast.success('Success. Check your cart!', {
 			position: 'bottom-right',
@@ -139,6 +141,13 @@ const ProductDetails = ({ product, products }) => {
 											behavior: 'smooth',
 										});
 								} else {
+									dispatch(
+										addCart({
+											...product?.data?.[0],
+											selectedSize,
+											oneQuantityPrice: p.price,
+										})
+									);
 									notify();
 								}
 							}}
