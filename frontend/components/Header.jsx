@@ -45,7 +45,6 @@ function Header(props) {
 		const { data } = await fetchDataFromApi('/api/categories?populate=*');
 		setCategories(data);
 	};
-
 	return (
 		<div
 			className={`w-full h-[50px] md:h-[80px] bg-white flex items-center justify-between z-20 sticky top-0 transition-transform duration-300 ${show} `}
@@ -100,7 +99,7 @@ function Header(props) {
 					{/*icon end */}
 
 					{/* Mobiles icon */}
-					<div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex justify-center items-center hover:bg-black/[0.05] cursor-pointer relative -mr-2">
+					<div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex md:hidden justify-center items-center hover:bg-black/[0.05] cursor-pointer relative -mr-2">
 						{mobileMenu ? (
 							<VscChromeClose
 								className="text-[16px]"
